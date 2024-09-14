@@ -6,7 +6,12 @@ class GeocodingService
   headers 'User-Agent' => 'WeatherApp (thiagomrvieira@gmail.com)'
 
   def get_coordinates(city)
-    response = self.class.get('/search', query: { q: city, format: 'json', limit: 1 })
+    response = self.class.get('/search', query: {
+      q: city,
+      format: 'json',
+      limit: 1
+    })
+
     raise "Geocoding API failed: #{response.code}" unless response.success?
 
     data = response.parsed_response.first
@@ -16,9 +21,9 @@ class GeocodingService
       latitude: data['lat'],
       longitude: data['lon']
     }
-  rescue => e
-    Rails.logger.error(e.message)
+
+  rescue StandardError => e
+    Rails.logger.error("Error in GeocodingService: #{e.message}")
     nil
   end
-
 end

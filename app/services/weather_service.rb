@@ -9,16 +9,37 @@ class WeatherService
   end
 
   def current_weather(city)
-    coordinates = @geocoding_service.get_coordinates(city)
-    return nil unless coordinates
+    Rails.logger.info("Checking cache for weather data for city: #{city}")
 
-    response = self.class.get('', query: { latitude: coordinates[:latitude], longitude: coordinates[:longitude], current_weather: true })
-    raise "Weather API failed: #{response.code}" unless response.success?
+    Rails.cache.fetch("weather_#{city}", expires_in: 30.minutes) do
+      Rails.logger.info("Cache miss for city: #{city}. Fetching new data...")
 
-    response
-  rescue => e
-    Rails.logger.error(e.message)
+      coordinates = @geocoding_service.get_coordinates(city)
+      return nil unless coordinates
+
+      response = fetch_weather_data(coordinates)
+
+      if response.success?
+        Rails.logger.info("Successfully fetched new weather data for city: #{city}")
+        response
+      else
+        Rails.logger.error("Failed to fetch weather data for city: #{city}")
+        nil
+      end
+    end
+
+  rescue StandardError => e
+    Rails.logger.error("Error in WeatherService: #{e.message}")
     nil
   end
 
+  private
+
+  def fetch_weather_data(coordinates)
+    self.class.get('', query: {
+      latitude: coordinates[:latitude],
+      longitude: coordinates[:longitude],
+      current_weather: true
+    })
+  end
 end

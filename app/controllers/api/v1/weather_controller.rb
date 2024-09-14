@@ -8,7 +8,8 @@ class Api::V1::WeatherController < ApplicationController
     if response
       render json: response
     else
-      render json: { error: 'Unable to fetch weather data, please check city name or try again later.' }, status: :unprocessable_entity
+      render json: { error: 'Unable to fetch weather data, please check city name or try again later.' },
+             status: :unprocessable_entity
     end
   end
 end
