@@ -5,10 +5,10 @@ class Api::V1::WeatherController < ApplicationController
     weather_service = WeatherService.new(geocoding_service)
     response = weather_service.current_weather(city)
 
-    if response && response.success?
+    if response
       render json: response
     else
-      render json: { error: 'Unable to fetch weather data' }, status: :unprocessable_entity
+      render json: { error: 'Unable to fetch weather data, please check city name or try again later.' }, status: :unprocessable_entity
     end
   end
 end
