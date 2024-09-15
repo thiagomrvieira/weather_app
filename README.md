@@ -29,10 +29,10 @@ All important actions and errors are logged using Rails’ logger. This includes
 * FetchWeather: Manages the overall process of fetching weather data.
 * WeatherService: Encapsulates the logic for calling the weather API and caching responses.
 
-### POROs
+#### POROs
 `WeatherResponse`: Transforms raw API data into a more user-friendly format.
 
-### Error Handling
+#### Error Handling
 Custom `error handlingà is implemented to provide clear and actionable feedback.
 
 ### 🚀 Running the project
