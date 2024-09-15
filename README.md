@@ -33,7 +33,7 @@ All important actions and errors are logged using Rails’ logger. This includes
 `WeatherResponse`: Transforms raw API data into a more user-friendly format.
 
 #### Error Handling
-Custom `error handlingà is implemented to provide clear and actionable feedback.
+Custom `error handling` is implemented to provide clear and actionable feedback.
 
 ### 🚀 Running the project
 #### Ruby Version
