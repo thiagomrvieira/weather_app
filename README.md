@@ -60,7 +60,3 @@ Ensure you have Ruby 3.1.0 or higher installed.
   rails s
 ```
 Visit http://127.0.0.1:3000/api/v1/weather?city=London in your browser or use a tool like Postman to test the API endpoints.
-
-
-
-
