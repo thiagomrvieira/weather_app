@@ -1,4 +1,6 @@
 class Api::V1::WeatherController < ApplicationController
+  before_action :set_default_format
+
   def show
     city = params[:city]
     weather_data = fetch_weather_data(city)
@@ -13,6 +15,10 @@ class Api::V1::WeatherController < ApplicationController
   end
 
   private
+
+  def set_default_format
+    request.format = :json
+  end
 
   def fetch_weather_data(city)
     FetchWeather.new(city).call

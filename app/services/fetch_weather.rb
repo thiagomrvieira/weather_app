@@ -6,7 +6,10 @@ class FetchWeather
   def call
     validate_city!
     weather_service = WeatherService.new(GeocodingService.new)
-    weather_service.current_weather(@city)
+    weather_data = weather_service.current_weather(@city)
+    weather_data['city'] = @city if weather_data
+
+    WeatherResponse.new(weather_data)
   end
 
   private
